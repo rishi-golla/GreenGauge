@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 
   # Import Code to Figma Make
 
@@ -9,3 +10,7 @@
 
   Run `npm run dev` to start the development server.
   
+=======
+# GreenGauge
+FinHack Project 
+>>>>>>> 678c0f12f19c84cafbdf3da16d591614f712752a
