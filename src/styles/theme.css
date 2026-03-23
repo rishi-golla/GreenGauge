@@ -2,6 +2,16 @@
 
 :root {
   --font-size: 16px;
+  --verdant-charcoal: #0d0f0e;
+  --verdant-panel: rgba(14, 18, 17, 0.4);
+  --verdant-border: #ffffff15;
+  --verdant-mint: #00f5d4;
+  --verdant-grid-dot: rgba(214, 222, 218, 0.24);
+  --verdant-grid-size: 20px;
+  --verdant-mist:
+    radial-gradient(circle at 72% 32%, rgba(0, 245, 212, 0.1), transparent 0 24rem),
+    radial-gradient(circle at 70% 72%, rgba(55, 117, 92, 0.18), transparent 0 28rem),
+    linear-gradient(180deg, rgba(8, 12, 11, 0.95) 0%, rgba(10, 15, 14, 0.98) 100%);
   --background: 201 100% 13%;
   --foreground: 0 0% 100%;
   --card: 201 46% 11%;
@@ -197,6 +207,58 @@
 }
 
 @layer utilities {
+  .verdant-noir-surface {
+    background-color: var(--verdant-charcoal);
+    background-image: var(--verdant-mist);
+  }
+
+  .verdant-grid {
+    background-image:
+      radial-gradient(circle at center, var(--verdant-grid-dot) 1px, transparent 1.2px);
+    background-size: var(--verdant-grid-size) var(--verdant-grid-size);
+    background-position: 10px 10px;
+  }
+
+  .verdant-glass {
+    background: var(--verdant-panel);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--verdant-border);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.05),
+      0 24px 80px rgba(0, 0, 0, 0.32);
+  }
+
+  .verdant-sidebar-active {
+    background:
+      linear-gradient(90deg, rgba(0, 245, 212, 0.14) 0%, rgba(0, 245, 212, 0.05) 100%);
+    box-shadow: inset 0 0 0 1px rgba(0, 245, 212, 0.04);
+  }
+
+  .verdant-highlight {
+    color: var(--verdant-mint);
+  }
+
+  .verdant-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.18) transparent;
+  }
+
+  .verdant-scrollbar::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  .verdant-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .verdant-scrollbar::-webkit-scrollbar-thumb {
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.16);
+    border: 2px solid transparent;
+    background-clip: padding-box;
+  }
+
   .liquid-glass {
     background: rgba(255, 255, 255, 0.01);
     background-blend-mode: luminosity;
