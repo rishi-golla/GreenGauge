@@ -1,0 +1,11 @@
+{
+	"inputs": [
+		{
+			"password": true,
+			"id": "brave-api-key",
+			"type": "promptString",
+			"description": "Brave Search API Key"
+		}
+	],
+	"servers": {}
+}

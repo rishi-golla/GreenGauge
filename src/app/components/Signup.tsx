@@ -4,12 +4,14 @@ import { Link, useLocation, useNavigate } from 'react-router';
 import { getSafeRedirectPath } from '../../lib/auth-routing';
 import { supabase } from '../../lib/supabase';
 
-export function Login() {
+export function Signup() {
   const navigate = useNavigate();
   const { search } = useLocation();
+  const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
+  const [message, setMessage] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const redirectTo = getSafeRedirectPath(new URLSearchParams(search).get('redirectTo'));
 
@@ -17,21 +19,32 @@ export function Login() {
     e.preventDefault();
 
     setError(null);
+    setMessage(null);
     setIsSubmitting(true);
 
-    const { error: signInError } = await supabase.auth.signInWithPassword({
+    const { data, error: signUpError } = await supabase.auth.signUp({
       email,
       password,
+      options: {
+        data: {
+          full_name: fullName,
+        },
+      },
     });
 
     setIsSubmitting(false);
 
-    if (signInError) {
-      setError(signInError.message);
+    if (signUpError) {
+      setError(signUpError.message);
       return;
     }
 
-    void navigate(redirectTo, { replace: true });
+    if (data.session) {
+      void navigate(redirectTo, { replace: true });
+      return;
+    }
+
+    setMessage('Check your inbox to confirm your email before signing in.');
   };
 
   return (
@@ -56,39 +69,37 @@ export function Login() {
       </header>
 
       <main className="flex flex-1 items-center px-6 pb-10 sm:px-10 lg:px-12">
-        <div className="mx-auto grid w-full max-w-6xl gap-12 lg:grid-cols-[minmax(0,1.1fr)_28rem] lg:items-center lg:-translate-y-6 xl:-translate-y-8">
+        <div className="mx-auto grid w-full max-w-6xl gap-12 lg:-translate-y-[6vh] lg:grid-cols-[minmax(0,1.1fr)_28rem] lg:items-center">
           <section className="max-w-2xl animate-fade-rise">
-            <p className="mb-5 text-sm uppercase tracking-[0.28em] text-white/52">
-              Secure access
-            </p>
+            <p className="mb-5 text-sm uppercase tracking-[0.28em] text-white/52">Create access</p>
             <h1
               className="max-w-3xl text-5xl leading-[0.9] tracking-[-0.045em] text-foreground sm:text-6xl lg:text-[5.25rem]"
               style={{ fontFamily: 'var(--font-display)', fontWeight: 400 }}
             >
-              Return to the lens that keeps climate exposure in view.
+              Start a calmer read on the climate exposure inside your portfolio.
             </h1>
             <p className="mt-6 max-w-xl text-base leading-7 text-white/68 sm:text-lg">
-              Sign in to continue your calm, evidence-led read on portfolio emissions, transition
-              pressure, and the holdings shaping environmental risk.
+              Create your GreenGauge account to begin tracking financed emissions, transition
+              pressure, and the holdings that shape environmental risk.
             </p>
 
             <div className="mt-10 hidden max-w-xl grid-cols-2 gap-4 sm:grid lg:grid-cols-2">
               <div className="liquid-glass rounded-[1.75rem] border border-white/10 px-5 py-5 shadow-[0_24px_80px_rgba(0,0,0,0.18)]">
-                <p className="text-[0.72rem] uppercase tracking-[0.22em] text-white/45">Signal</p>
+                <p className="text-[0.72rem] uppercase tracking-[0.22em] text-white/45">Start with</p>
                 <p
                   className="mt-3 text-2xl tracking-[-0.03em] text-foreground"
                   style={{ fontFamily: 'var(--font-display)' }}
                 >
-                  Financed emissions
+                  Portfolio x-ray
                 </p>
               </div>
               <div className="liquid-glass rounded-[1.75rem] border border-white/10 px-5 py-5 shadow-[0_24px_80px_rgba(0,0,0,0.18)]">
-                <p className="text-[0.72rem] uppercase tracking-[0.22em] text-white/45">Focus</p>
+                <p className="text-[0.72rem] uppercase tracking-[0.22em] text-white/45">Built for</p>
                 <p
                   className="mt-3 text-2xl tracking-[-0.03em] text-foreground"
                   style={{ fontFamily: 'var(--font-display)' }}
                 >
-                  Transition pressure
+                  Evidence-led insight
                 </p>
               </div>
             </div>
@@ -99,19 +110,34 @@ export function Login() {
               <div className="absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-white/60 to-transparent" />
 
               <div className="mb-8">
-                <p className="text-xs uppercase tracking-[0.24em] text-white/46">Member login</p>
+                <p className="text-xs uppercase tracking-[0.24em] text-white/46">New account</p>
                 <h2
                   className="mt-4 text-4xl leading-none tracking-[-0.04em] text-foreground sm:text-[3rem]"
                   style={{ fontFamily: 'var(--font-display)', fontWeight: 400 }}
                 >
-                  Welcome back
+                  Sign up
                 </h2>
                 <p className="mt-4 max-w-sm text-sm leading-6 text-white/64">
-                  Enter your details to reopen your GreenGauge workspace.
+                  Add a few details to open your GreenGauge workspace.
                 </p>
               </div>
 
               <form onSubmit={handleSubmit} className="space-y-5">
+                <div className="space-y-2.5">
+                  <label htmlFor="fullName" className="block text-sm text-white/72">
+                    Full name
+                  </label>
+                  <input
+                    id="fullName"
+                    type="text"
+                    value={fullName}
+                    onChange={(e) => setFullName(e.target.value)}
+                    className="w-full rounded-2xl border border-white/14 bg-white/[0.05] px-4 py-3.5 text-sm text-foreground placeholder:text-white/38 shadow-[inset_0_1px_0_rgba(255,255,255,0.06)] outline-none transition duration-300 focus:border-white/30 focus:bg-white/[0.08] focus:ring-4 focus:ring-white/10"
+                    placeholder="Ada Lovelace"
+                    required
+                  />
+                </div>
+
                 <div className="space-y-2.5">
                   <label htmlFor="email" className="block text-sm text-white/72">
                     Email address
@@ -137,19 +163,36 @@ export function Login() {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     className="w-full rounded-2xl border border-white/14 bg-white/[0.05] px-4 py-3.5 text-sm text-foreground placeholder:text-white/38 shadow-[inset_0_1px_0_rgba(255,255,255,0.06)] outline-none transition duration-300 focus:border-white/30 focus:bg-white/[0.08] focus:ring-4 focus:ring-white/10"
-                    placeholder="••••••••"
+                    placeholder="Create a password"
                     required
                   />
                 </div>
 
-                <div className="rounded-[1.5rem] border border-white/10 bg-black/10 px-4 py-4 text-sm leading-6 text-white/60">
-                  Use the email and password you created for this prototype workspace. Account
-                  recovery and persistent sign-in controls are not part of the current flow yet.
+                <div className="flex flex-col gap-3 text-sm text-white/60 sm:flex-row sm:items-center sm:justify-between">
+                  <label className="inline-flex items-center gap-3 text-sm text-white/62">
+                    <input
+                      type="checkbox"
+                      className="h-4 w-4 rounded border-white/25 bg-transparent accent-white"
+                      required
+                    />
+                    I understand this creates a GreenGauge account for the current prototype
+                  </label>
                 </div>
+
+                <p className="rounded-[1.5rem] border border-white/10 bg-black/10 px-4 py-4 text-sm leading-6 text-white/60">
+                  We&apos;ll use these details to create your sign-in only. Formal terms, billing, and
+                  marketing preference controls are not part of this flow.
+                </p>
 
                 {error ? (
                   <p className="rounded-2xl border border-rose-300/20 bg-rose-400/10 px-4 py-3 text-sm text-rose-100">
                     {error}
+                  </p>
+                ) : null}
+
+                {message ? (
+                  <p className="rounded-2xl border border-emerald-200/20 bg-emerald-400/10 px-4 py-3 text-sm text-emerald-50">
+                    {message}
                   </p>
                 ) : null}
 
@@ -158,17 +201,17 @@ export function Login() {
                   disabled={isSubmitting}
                   className="inline-flex w-full items-center justify-center rounded-full border border-white/16 bg-white px-6 py-3.5 text-sm font-medium text-black shadow-[0_18px_44px_rgba(0,0,0,0.22)] transition-all duration-300 hover:translate-y-[-1px] hover:bg-white/92 focus:outline-none focus:ring-4 focus:ring-white/18 disabled:cursor-not-allowed disabled:opacity-70"
                 >
-                  {isSubmitting ? 'Signing in...' : 'Sign in'}
+                  {isSubmitting ? 'Creating account...' : 'Create your account'}
                 </button>
               </form>
 
               <div className="mt-6 border-t border-white/10 pt-5 text-center text-sm text-white/54">
-                Don&apos;t have an account?{' '}
+                Already have an account?{' '}
                 <Link
-                  to="/signup"
+                  to="/login"
                   className="text-white/76 no-underline transition-colors hover:text-foreground"
                 >
-                  Sign up
+                  Sign in
                 </Link>
               </div>
             </div>
