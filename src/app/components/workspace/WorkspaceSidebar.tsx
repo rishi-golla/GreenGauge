@@ -3,6 +3,7 @@ import { NavLink, useLocation } from 'react-router';
 
 import { analystProfile, workspaceNavigation } from './workspace-data';
 import { cn } from '../ui/utils';
+import { GlobalSearch } from './GlobalSearch';
 
 export function WorkspaceSidebar({
   isSigningOut,
@@ -47,7 +48,13 @@ export function WorkspaceSidebar({
       </div>
 
       <div className="flex flex-1 flex-col overflow-hidden">
-        <nav className={`mt-6 grid gap-2 sm:grid-cols-2 lg:grid-cols-1 ${isCompanyRoute ? 'lg:mt-10' : 'lg:mt-14'}`}>
+        {!isCompanyRoute ? (
+          <div className="mt-6 lg:mt-8">
+            <GlobalSearch />
+          </div>
+        ) : null}
+
+        <nav className={`mt-6 grid gap-2 sm:grid-cols-2 lg:grid-cols-1 ${isCompanyRoute ? 'lg:mt-10' : 'lg:mt-4'}`}>
           {workspaceNavigation.map(({ icon: Icon, label, to }) => (
             <NavLink
               key={label}
