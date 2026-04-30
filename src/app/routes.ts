@@ -7,6 +7,7 @@ import { MarketingShell } from './components/MarketingShell';
 import { Signup } from './components/Signup';
 import { AssetsPage } from './components/workspace/pages/AssetsPage';
 import { AIChatPage } from './components/workspace/pages/AIChatPage';
+import { CompanyDetailPage } from './components/workspace/pages/CompanyDetailPage';
 import { DashboardPage } from './components/workspace/pages/DashboardPage';
 import { RiskPage } from './components/workspace/pages/RiskPage';
 import { SettingsPage } from './components/workspace/pages/SettingsPage';
@@ -82,6 +83,10 @@ export const router = createBrowserRouter([
           {
             path: 'dashboard',
             Component: DashboardPage,
+          },
+          {
+            path: 'company/:ticker',
+            Component: CompanyDetailPage,
           },
           {
             path: 'assets',

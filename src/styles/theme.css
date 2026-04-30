@@ -1,5 +1,11 @@
 @custom-variant dark (&:is(.dark *));
 
+html,
+body,
+#root {
+  height: 100%;
+}
+
 :root {
   --font-size: 16px;
   --verdant-charcoal: #0d0f0e;
@@ -136,20 +142,33 @@
     @apply border-border outline-ring/50;
   }
 
+  html {
+    font-size: var(--font-size);
+    min-height: 100%;
+    overflow-x: hidden;
+    background-color: var(--verdant-charcoal);
+  }
+
   body {
-    @apply bg-background text-foreground;
+    @apply text-foreground;
+    background-color: var(--verdant-charcoal);
+    min-height: 100vh;
+    width: 100%;
+    overflow-x: hidden;
     font-family: var(--font-body);
     font-feature-settings: 'rlig' 1, 'calt' 1;
+  }
+
+  #root {
+    min-height: 100vh;
+    width: 100%;
+    background-color: var(--verdant-charcoal);
   }
 
   /**
   * Default typography styles for HTML elements (h1-h4, p, label, button, input).
   * These are in @layer base, so Tailwind utility classes (like text-sm, text-lg) automatically override them.
   */
-
-  html {
-    font-size: var(--font-size);
-  }
 
   h1 {
     font-size: var(--text-2xl);

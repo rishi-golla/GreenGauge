@@ -1,0 +1,31 @@
+# Web framework
+fastapi==0.111.0
+uvicorn[standard]==0.29.0
+
+# Database
+sqlalchemy==2.0.30
+alembic==1.13.1
+psycopg2-binary==2.9.9
+
+# Data validation
+pydantic==2.7.1
+pydantic-settings==2.2.1
+
+# Environment variables
+python-dotenv==1.0.1
+
+# Caching (optional Redis support)
+redis==5.0.4
+
+# CSV parsing (stdlib csv is fine, but pandas makes validation easy)
+pandas==2.2.2
+
+# HTTP client (for Alpha Vantage adapter)
+httpx==0.27.0
+
+# Password hashing (for user auth later)
+passlib[bcrypt]==1.7.4
+
+# Testing
+pytest==8.2.0
+httpx==0.27.0

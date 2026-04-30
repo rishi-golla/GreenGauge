@@ -57,9 +57,9 @@ export const workspacePageMeta: Record<
   { eyebrow: string; title: string; description: string }
 > = {
   '/workspace/dashboard': {
-    eyebrow: 'Portfolio Command',
-    title: 'Dashboard',
-    description: 'See the portfolio posture, pressure points, and what deserves attention first.',
+    eyebrow: '',
+    title: '',
+    description: '',
   },
   '/workspace/assets': {
     eyebrow: 'Holdings Lens',

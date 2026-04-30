@@ -37,7 +37,7 @@ export function Login() {
   return (
     <>
       <header>
-        <nav className="flex items-center justify-between px-6 py-8 sm:px-10 lg:px-12 lg:py-10">
+        <nav className="flex items-center justify-between px-6 py-8 sm:px-10 lg:px-10 lg:py-10 xl:px-10">
           <Link
             to="/"
             className="text-3xl tracking-[-0.03em] text-foreground no-underline sm:text-[2rem]"
@@ -55,37 +55,39 @@ export function Login() {
         </nav>
       </header>
 
-      <main className="flex flex-1 items-center px-6 pb-10 sm:px-10 lg:px-12">
-        <div className="mx-auto grid w-full max-w-6xl gap-12 lg:grid-cols-[minmax(0,1.1fr)_28rem] lg:items-center lg:-translate-y-6 xl:-translate-y-8">
+      <main className="flex flex-1 items-center px-6 pb-12 sm:px-10 lg:px-10">
+        <div className="relative mx-auto w-full max-w-[82rem]">
+          <div className="absolute left-1/2 top-[-40px] bottom-[-40px] z-0 w-screen -translate-x-1/2 bg-[linear-gradient(180deg,rgba(3,14,18,0)_0%,rgba(3,14,18,0.82)_14%,rgba(3,14,18,0.88)_50%,rgba(3,14,18,0.82)_86%,rgba(3,14,18,0)_100%)]" />
+          <div className="relative z-10 grid w-full gap-14 lg:min-h-[58vh] lg:grid-cols-[minmax(0,1.14fr)_31rem] lg:items-start">
           <section className="max-w-2xl animate-fade-rise">
             <p className="mb-5 text-sm uppercase tracking-[0.28em] text-white/52">
               Secure access
             </p>
             <h1
-              className="max-w-3xl text-5xl leading-[0.9] tracking-[-0.045em] text-foreground sm:text-6xl lg:text-[5.25rem]"
+              className="max-w-3xl text-5xl leading-[0.9] tracking-[-0.045em] text-foreground sm:text-6xl lg:text-[5.9rem]"
               style={{ fontFamily: 'var(--font-display)', fontWeight: 400 }}
             >
               Return to the lens that keeps climate exposure in view.
             </h1>
-            <p className="mt-6 max-w-xl text-base leading-7 text-white/68 sm:text-lg">
+            <p className="mt-7 max-w-xl text-lg leading-8 text-white/68">
               Sign in to continue your calm, evidence-led read on portfolio emissions, transition
               pressure, and the holdings shaping environmental risk.
             </p>
 
-            <div className="mt-10 hidden max-w-xl grid-cols-2 gap-4 sm:grid lg:grid-cols-2">
-              <div className="liquid-glass rounded-[1.75rem] border border-white/10 px-5 py-5 shadow-[0_24px_80px_rgba(0,0,0,0.18)]">
+            <div className="mt-12 hidden max-w-2xl grid-cols-2 gap-5 sm:grid lg:grid-cols-2">
+              <div className="liquid-glass rounded-[1.75rem] border border-white/10 px-6 py-6 shadow-[0_24px_80px_rgba(0,0,0,0.18)]">
                 <p className="text-[0.72rem] uppercase tracking-[0.22em] text-white/45">Signal</p>
                 <p
-                  className="mt-3 text-2xl tracking-[-0.03em] text-foreground"
+                  className="mt-3 text-[2rem] tracking-[-0.03em] text-foreground"
                   style={{ fontFamily: 'var(--font-display)' }}
                 >
                   Financed emissions
                 </p>
               </div>
-              <div className="liquid-glass rounded-[1.75rem] border border-white/10 px-5 py-5 shadow-[0_24px_80px_rgba(0,0,0,0.18)]">
+              <div className="liquid-glass rounded-[1.75rem] border border-white/10 px-6 py-6 shadow-[0_24px_80px_rgba(0,0,0,0.18)]">
                 <p className="text-[0.72rem] uppercase tracking-[0.22em] text-white/45">Focus</p>
                 <p
-                  className="mt-3 text-2xl tracking-[-0.03em] text-foreground"
+                  className="mt-3 text-[2rem] tracking-[-0.03em] text-foreground"
                   style={{ fontFamily: 'var(--font-display)' }}
                 >
                   Transition pressure
@@ -94,8 +96,8 @@ export function Login() {
             </div>
           </section>
 
-          <section className="animate-fade-rise-delay lg:justify-self-end">
-            <div className="liquid-glass relative overflow-hidden rounded-[2rem] border border-white/14 bg-white/[0.06] p-7 shadow-[0_40px_120px_rgba(0,0,0,0.35)] sm:p-8">
+          <section className="animate-fade-rise-delay lg:justify-self-end lg:pt-0">
+            <div className="liquid-glass relative overflow-hidden rounded-[2rem] border border-white/14 bg-white/[0.06] px-8 py-8 shadow-[0_40px_120px_rgba(0,0,0,0.35)] sm:px-8 sm:py-8">
               <div className="absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-white/60 to-transparent" />
 
               <div className="mb-8">
@@ -173,6 +175,7 @@ export function Login() {
               </div>
             </div>
           </section>
+          </div>
         </div>
       </main>
     </>
