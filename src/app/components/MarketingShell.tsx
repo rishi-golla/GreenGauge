@@ -65,7 +65,6 @@ export function MarketingShell() {
               : 'h-80 opacity-0',
         )}
       />
-
       <div className="relative z-20 flex min-h-screen flex-col">
         <Outlet />
       </div>

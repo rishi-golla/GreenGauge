@@ -13,23 +13,6 @@ export function Home() {
             GreenGauge
           </Link>
 
-          <div className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-9 md:flex">
-            <a href="#" className="text-sm text-foreground transition-colors">
-              Home
-            </a>
-            <a href="#" className="text-sm text-white/72 transition-colors hover:text-foreground">
-              Studio
-            </a>
-            <a href="#" className="text-sm text-white/72 transition-colors hover:text-foreground">
-              About
-            </a>
-            <a href="#" className="text-sm text-white/72 transition-colors hover:text-foreground">
-              Journal
-            </a>
-            <a href="#" className="text-sm text-white/72 transition-colors hover:text-foreground">
-              Reach Us
-            </a>
-          </div>
 
           <div className="relative z-10 flex items-center gap-3">
             <Link
