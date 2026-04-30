@@ -1,9 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { ArrowRight, Mic, Paperclip } from 'lucide-react';
+import { ArrowRight, Paperclip } from 'lucide-react';
 
-import { WorkspaceChip } from '../WorkspaceChip';
 import { WorkspaceSectionHeading } from '../WorkspaceSectionHeading';
-import { chatThreads } from '../workspace-data';
 
 type Message = {
   id: string;
@@ -105,11 +103,6 @@ export function AIChatPage() {
     [isStreaming, messages],
   );
 
-  const handlePreset = (threadId: string) => {
-    const thread = chatThreads.find((t) => t.id === threadId);
-    if (thread) sendMessage(thread.analystPrompt);
-  };
-
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
       e.preventDefault();
@@ -123,20 +116,8 @@ export function AIChatPage() {
         <WorkspaceSectionHeading
           eyebrow="Prompt Studio"
           title="Query the portfolio like you are working beside a climate specialist."
-          description="Ask about any company, sector, or ESG theme. Use the presets below or type your own query."
+          description="Ask about any company, sector, or ESG theme."
         />
-        <div className="mt-6 flex flex-wrap gap-2">
-          {chatThreads.map((thread) => (
-            <WorkspaceChip
-              key={thread.id}
-              isActive={false}
-              disabled={isStreaming}
-              onClick={() => handlePreset(thread.id)}
-            >
-              {thread.promptLabel}
-            </WorkspaceChip>
-          ))}
-        </div>
       </section>
 
       {messages.length === 0 ? (
@@ -149,7 +130,7 @@ export function AIChatPage() {
               Greengauge Intelligence
             </p>
             <p className="mt-3 max-w-xs text-sm leading-relaxed text-white/28">
-              Ask about any holding, sector, or ESG scenario. Select a preset above or type below.
+              Ask about any holding, sector, or ESG scenario.
             </p>
           </div>
         </section>
@@ -207,15 +188,6 @@ export function AIChatPage() {
             className="min-w-0 flex-1 bg-transparent text-sm text-white/82 outline-none placeholder:text-white/28 disabled:opacity-50 sm:text-base"
             aria-label="Chat input"
           />
-
-          <button
-            type="button"
-            disabled={isStreaming}
-            className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-white/10 text-white/72 transition hover:text-white disabled:opacity-40"
-            aria-label="Use microphone"
-          >
-            <Mic className="h-5 w-5" />
-          </button>
 
           <button
             type="button"
