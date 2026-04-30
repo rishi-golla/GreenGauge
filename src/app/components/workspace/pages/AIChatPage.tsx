@@ -10,6 +10,9 @@ type Message = {
   streaming?: boolean;
 };
 
+const CHARS_PER_TICK = 2;
+const TICK_MS = 16;
+
 export function AIChatPage() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
@@ -17,10 +20,20 @@ export function AIChatPage() {
   const bottomRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const abortRef = useRef<AbortController | null>(null);
+  const pendingRef = useRef('');
+  const sseCompleteRef = useRef(false);
+  const typingIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
+
+  const stopTyping = useCallback(() => {
+    if (typingIntervalRef.current !== null) {
+      clearInterval(typingIntervalRef.current);
+      typingIntervalRef.current = null;
+    }
+  }, []);
 
   const sendMessage = useCallback(
     async (text: string) => {
@@ -34,6 +47,9 @@ export function AIChatPage() {
 
       const nextHistory = [...history, { role: 'user' as const, content: trimmed }];
 
+      pendingRef.current = '';
+      sseCompleteRef.current = false;
+
       setMessages((prev) => [
         ...prev.filter((m) => !m.streaming),
         { id: `user-${Date.now()}`, role: 'user', content: trimmed },
@@ -41,6 +57,25 @@ export function AIChatPage() {
       ]);
       setInput('');
       setIsStreaming(true);
+
+      typingIntervalRef.current = setInterval(() => {
+        if (pendingRef.current.length > 0) {
+          const chunk = pendingRef.current.slice(0, CHARS_PER_TICK);
+          pendingRef.current = pendingRef.current.slice(CHARS_PER_TICK);
+          setMessages((prev) =>
+            prev.map((m) =>
+              m.id === assistantId ? { ...m, content: m.content + chunk } : m,
+            ),
+          );
+        } else if (sseCompleteRef.current) {
+          stopTyping();
+          setMessages((prev) =>
+            prev.map((m) => (m.id === assistantId ? { ...m, streaming: false } : m)),
+          );
+          setIsStreaming(false);
+          abortRef.current = null;
+        }
+      }, TICK_MS);
 
       abortRef.current = new AbortController();
 
@@ -71,11 +106,7 @@ export function AIChatPage() {
               const { text, error } = JSON.parse(payload);
               if (error) throw new Error(error);
               if (text) {
-                setMessages((prev) =>
-                  prev.map((m) =>
-                    m.id === assistantId ? { ...m, content: m.content + text } : m,
-                  ),
-                );
+                pendingRef.current += text;
               }
             } catch {
               // ignore malformed SSE lines
@@ -83,6 +114,8 @@ export function AIChatPage() {
           }
         }
       } catch (err) {
+        stopTyping();
+        pendingRef.current = '';
         if (err instanceof Error && err.name !== 'AbortError') {
           setMessages((prev) =>
             prev.map((m) =>
@@ -91,16 +124,19 @@ export function AIChatPage() {
                 : m,
             ),
           );
+        } else {
+          setMessages((prev) =>
+            prev.map((m) => (m.id === assistantId ? { ...m, streaming: false } : m)),
+          );
         }
+        setIsStreaming(false);
+        abortRef.current = null;
+        return;
       }
 
-      setMessages((prev) =>
-        prev.map((m) => (m.id === assistantId ? { ...m, streaming: false } : m)),
-      );
-      setIsStreaming(false);
-      abortRef.current = null;
+      sseCompleteRef.current = true;
     },
-    [isStreaming, messages],
+    [isStreaming, messages, stopTyping],
   );
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
