@@ -93,7 +93,7 @@ function BrandLogo({ company }: { company: DashboardScoredCompany }) {
 
   return (
     <div
-      className="flex h-[5.4rem] w-[5.4rem] shrink-0 items-center justify-center rounded-[1.3rem] bg-white/[0.95] p-4 shadow-[0_18px_34px_rgba(0,0,0,0.22)]"
+      className="flex h-[3.8rem] w-[3.8rem] shrink-0 items-center justify-center rounded-[0.9rem] bg-white/[0.95] p-[0.6rem] shadow-[0_12px_24px_rgba(0,0,0,0.2)]"
       style={{
         boxShadow: `0 18px 34px rgba(0,0,0,0.22), 0 0 0 1px ${company.brandColor}22 inset`,
       }}
@@ -234,7 +234,7 @@ export function DashboardPage() {
                     aria-label={`Open ${company.name} detail page`}
                   >
                     <article
-                      className="liquid-glass group relative flex min-h-[18.5rem] cursor-pointer flex-col justify-between rounded-[1.5rem] px-8 pt-8 pb-7 transition-all duration-300 ease-out hover:-translate-y-1.5 hover:shadow-[0_30px_60px_rgba(0,0,0,0.28)] focus-within:-translate-y-1.5"
+                      className="liquid-glass group relative flex min-h-[16rem] cursor-pointer flex-col justify-between rounded-[1.5rem] px-5 pt-6 pb-5 transition-all duration-300 ease-out hover:-translate-y-1.5 hover:shadow-[0_30px_60px_rgba(0,0,0,0.28)] focus-within:-translate-y-1.5"
                       style={{
                         animation: 'fade-rise 0.75s ease-out both',
                         animationDelay: `${index * 70}ms`,
@@ -247,21 +247,21 @@ export function DashboardPage() {
                       }}
                     >
                       <div className="pointer-events-none absolute inset-0">
-                        <div className="absolute left-0 top-8 h-[60%] w-px bg-gradient-to-b from-white/45 via-white/10 to-transparent" />
-                        <div className="absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-white/70 to-transparent" />
+                        <div className="absolute left-0 top-6 h-[60%] w-px bg-gradient-to-b from-white/45 via-white/10 to-transparent" />
+                        <div className="absolute inset-x-5 top-0 h-px bg-gradient-to-r from-transparent via-white/70 to-transparent" />
                         <div
                           className="absolute -left-10 top-4 h-32 w-32 rounded-full blur-3xl opacity-80 transition-opacity duration-300 group-hover:opacity-100"
                           style={{ backgroundColor: `${company.brandColor}20` }}
                         />
                       </div>
 
-                      <div className="relative flex items-start justify-between gap-6">
-                        <div className="flex items-start gap-5">
+                      <div className="relative flex items-start justify-between gap-3">
+                        <div className="flex items-start gap-3">
                           <BrandLogo company={company} />
 
                           <div className="min-w-0 self-start pt-1">
                             <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
-                              <h3 className="text-[1.32rem] font-semibold leading-tight tracking-[-0.03em] text-white">
+                              <h3 className="text-[1.12rem] font-semibold leading-tight tracking-[-0.03em] text-white">
                                 {company.name}
                               </h3>
                               <span className="text-[0.74rem] font-semibold uppercase tracking-[0.16em] text-white/28">
@@ -278,15 +278,15 @@ export function DashboardPage() {
                           <p className="mb-2 text-[0.64rem] font-semibold uppercase tracking-[0.24em] text-white/26">
                             {section.scoreLabel}
                           </p>
-                          <div className="min-w-[7.5rem]">
-                            <p className={`text-[3.6rem] font-semibold leading-none tracking-[-0.1em] ${scoreStyles.scoreClass}`}>
+                          <div>
+                            <p className={`text-[2.9rem] font-semibold leading-none tracking-[-0.1em] ${scoreStyles.scoreClass}`}>
                               {score}
                             </p>
-                            <div className="mt-2 flex items-baseline justify-end gap-1.5">
-                              <span className="text-[0.82rem] font-semibold tracking-[-0.02em] text-white/55">
+                            <div className="mt-1.5 flex items-baseline justify-end gap-1">
+                              <span className="text-[0.72rem] font-semibold tracking-[-0.02em] text-white/55">
                                 out of
                               </span>
-                              <span className="text-[1rem] font-semibold tracking-[-0.04em] text-white/82">
+                              <span className="text-[0.85rem] font-semibold tracking-[-0.04em] text-white/82">
                                 100
                               </span>
                             </div>
@@ -304,7 +304,7 @@ export function DashboardPage() {
                         </div>
                       </div>
 
-                      <div className="relative mt-8 border-t border-white/8 pt-5">
+                      <div className="relative mt-5 border-t border-white/8 pt-4">
                         <div className="flex items-end justify-between gap-4">
                           <div className="min-w-0 flex-1">
                             <p className="mb-3 text-[0.62rem] font-semibold uppercase tracking-[0.24em] text-white/24">

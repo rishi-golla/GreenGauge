@@ -1,5 +1,11 @@
 @custom-variant dark (&:is(.dark *));
 
+html,
+body,
+#root {
+  height: 100%;
+}
+
 :root {
   --font-size: 16px;
   --verdant-charcoal: #0d0f0e;
