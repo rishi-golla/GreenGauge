@@ -1,4 +1,18 @@
 node_modules
+node_modules/
 .env
 .worktrees/
 dist/
+
+# IDEs
+.vscode/
+.idea/
+
+# macOS
+.DS_Store
+
+# Docker
+*.log
+
+babel.config.js
+sdk/

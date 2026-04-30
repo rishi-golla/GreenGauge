@@ -1,7 +1,9 @@
+import { useEffect, useState } from 'react';
 import { ChevronLeft, ChevronRight, LogOut } from 'lucide-react';
 import { NavLink } from 'react-router';
 
 import { analystProfile, workspaceNavigation } from './workspace-data';
+import { SETTINGS_STORAGE_KEY, SETTINGS_UPDATED_EVENT } from './pages/SettingsPage';
 import { cn } from '../ui/utils';
 import { GlobalSearch } from './GlobalSearch';
 
@@ -9,6 +11,16 @@ function getInitials(name: string): string {
   const parts = name.trim().split(/\s+/);
   if (parts.length >= 2) return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
   return name.slice(0, 2).toUpperCase();
+}
+
+function getSavedName(): string | null {
+  try {
+    const raw = localStorage.getItem(SETTINGS_STORAGE_KEY);
+    if (!raw) return null;
+    return (JSON.parse(raw) as { account?: { name?: string } })?.account?.name ?? null;
+  } catch {
+    return null;
+  }
 }
 
 export function WorkspaceSidebar({
@@ -27,8 +39,16 @@ export function WorkspaceSidebar({
   onToggleCollapse: () => void;
 }) {
   const isCompact = isCollapsed;
-  const displayName = userName ?? analystProfile.name;
-  const initials = userName ? getInitials(userName) : analystProfile.initials;
+  const [savedName, setSavedName] = useState<string | null>(getSavedName);
+
+  useEffect(() => {
+    const handler = () => setSavedName(getSavedName());
+    window.addEventListener(SETTINGS_UPDATED_EVENT, handler);
+    return () => window.removeEventListener(SETTINGS_UPDATED_EVENT, handler);
+  }, []);
+
+  const displayName = savedName ?? userName ?? analystProfile.name;
+  const initials = getInitials(displayName);
 
   return (
     <aside

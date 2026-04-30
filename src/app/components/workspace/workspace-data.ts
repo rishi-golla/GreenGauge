@@ -333,11 +333,6 @@ export const chatThreads = [
 
 export const settingsGroups = [
   {
-    title: 'Daily Briefing',
-    description: 'Tune how GreenGauge summarizes the portfolio when you open the workspace.',
-    options: ['Executive summary', 'Narrative analysis', 'Risk-first briefing'],
-  },
-  {
     title: 'Alert Thresholds',
     description: 'Control when concentration, carbon, and stranded-asset warnings escalate visually.',
     options: ['Conservative', 'Balanced', 'Aggressive'],
