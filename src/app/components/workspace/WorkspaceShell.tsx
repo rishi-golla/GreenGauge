@@ -81,7 +81,11 @@ export function WorkspaceShell({
                 className={`${isFullscreenRoute ? '' : 'mx-auto'} flex min-h-0 w-full flex-col ${
                   isFullscreenRoute ? 'flex-1 gap-0' : 'gap-8 lg:gap-10'
                 } ${
-                  isCompanyRoute ? 'max-w-none' : isImmersiveWorkspaceRoute ? 'max-w-[104rem]' : 'max-w-6xl'
+                  isFullscreenRoute
+                    ? 'max-w-none'
+                    : isImmersiveWorkspaceRoute
+                      ? 'max-w-[104rem]'
+                      : 'max-w-6xl'
                 }`}
               >
                 <Outlet />

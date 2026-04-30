@@ -8,7 +8,6 @@ import {
   MessageSquareText,
   Settings,
   ShieldAlert,
-  TriangleAlert,
   WalletCards,
 } from 'lucide-react';
 
@@ -31,12 +30,6 @@ export const workspaceNavigation: WorkspaceNavItem[] = [
     label: 'Assets',
     description: 'Holdings browser',
     to: '/workspace/assets',
-  },
-  {
-    icon: TriangleAlert,
-    label: 'Risk',
-    description: 'Scenario pressure analysis',
-    to: '/workspace/risk',
   },
   {
     icon: MessageSquareText,
@@ -66,15 +59,10 @@ export const workspacePageMeta: Record<
     title: 'Assets',
     description: 'Scan the names, sectors, and weights shaping your environmental exposure.',
   },
-  '/workspace/risk': {
-    eyebrow: 'Scenario Studio',
-    title: 'Risk',
-    description: 'Stress the portfolio through carbon, supply-chain, and regulatory scenarios.',
-  },
   '/workspace/chat': {
-    eyebrow: 'Analyst Interface',
-    title: 'AI Chat',
-    description: 'Interrogate the portfolio in natural language and surface narrative context quickly.',
+    eyebrow: '',
+    title: '',
+    description: '',
   },
   '/workspace/settings': {
     eyebrow: 'Workspace Controls',

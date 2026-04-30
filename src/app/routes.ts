@@ -9,7 +9,6 @@ import { AssetsPage } from './components/workspace/pages/AssetsPage';
 import { AIChatPage } from './components/workspace/pages/AIChatPage';
 import { CompanyDetailPage } from './components/workspace/pages/CompanyDetailPage';
 import { DashboardPage } from './components/workspace/pages/DashboardPage';
-import { RiskPage } from './components/workspace/pages/RiskPage';
 import { SettingsPage } from './components/workspace/pages/SettingsPage';
 import {
   buildLoginRedirect,
@@ -91,10 +90,6 @@ export const router = createBrowserRouter([
           {
             path: 'assets',
             Component: AssetsPage,
-          },
-          {
-            path: 'risk',
-            Component: RiskPage,
           },
           {
             path: 'chat',
