@@ -33,8 +33,8 @@ export function WorkspaceSidebar({
   return (
     <aside
       className={cn(
-        'flex w-full shrink-0 flex-col border-b border-white/6 bg-black/32 px-5 py-6 transition-[width] duration-300 ease-in-out',
-        'lg:h-full lg:overflow-y-auto lg:border-r lg:border-b-0 lg:py-7',
+        'flex w-full shrink-0 flex-col border-b border-white/6 bg-black/32 px-5 py-6 transition-[width,padding] duration-300 ease-in-out',
+        'lg:fixed lg:left-0 lg:top-0 lg:z-50 lg:h-screen lg:overflow-hidden lg:border-r lg:border-b-0 lg:py-7',
         isCompact ? 'lg:w-[4.5rem] lg:px-2' : 'lg:w-[18.5rem] lg:px-5',
       )}
     >

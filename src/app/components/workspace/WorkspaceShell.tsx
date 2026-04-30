@@ -18,12 +18,14 @@ export function WorkspaceShell({
   const location = useLocation();
   const isDashboardRoute = location.pathname === '/workspace/dashboard';
   const isCompanyRoute = location.pathname.startsWith('/workspace/company/');
+  const isChatRoute = location.pathname === '/workspace/chat';
   const isImmersiveWorkspaceRoute = isDashboardRoute || isCompanyRoute;
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
+  const isFullscreenRoute = isCompanyRoute || isChatRoute;
 
   return (
-    <main className="flex h-dvh overflow-hidden verdant-noir-surface">
-      <div className="flex h-full w-full flex-col lg:flex-row">
+    <main className="flex h-dvh flex-1 overflow-hidden verdant-noir-surface">
+      <div className="flex min-h-0 flex-1 flex-col overflow-hidden">
         {!isCompanyRoute ? (
           <WorkspaceSidebar
             isSigningOut={isSigningOut}
@@ -35,9 +37,11 @@ export function WorkspaceShell({
           />
         ) : null}
 
-        {/* Content area — this is the ONE scroll container */}
-        <div className="relative min-h-0 flex-1">
-          {/* Backgrounds — absolute inside this bounded div, never inside the scroll container */}
+        <section
+          className={`relative flex min-h-0 flex-1 flex-col overflow-hidden transition-[margin] duration-300 ease-in-out ${
+            !isCompanyRoute ? (isSidebarCollapsed ? 'lg:ml-[4.5rem]' : 'lg:ml-[18.5rem]') : ''
+          }`}
+        >
           <div
             className={`pointer-events-none absolute inset-0 z-0 ${
               isImmersiveWorkspaceRoute
@@ -58,18 +62,24 @@ export function WorkspaceShell({
 
           {/* Scroll container */}
           <div
-            className={`verdant-scrollbar relative z-10 flex h-full flex-col px-4 py-4 sm:px-6 sm:py-5 ${
-              isCompanyRoute ? 'overflow-hidden lg:px-4 lg:py-3' : 'overflow-y-auto lg:px-8 lg:py-6'
+            className={`relative z-10 flex min-h-0 flex-1 flex-col px-4 py-4 sm:px-6 ${
+              isCompanyRoute ? 'sm:py-5 lg:px-4 lg:py-3' : isChatRoute ? 'pt-4 pb-0 sm:pt-5 sm:pb-0 lg:px-8 lg:pt-6 lg:pb-0' : 'sm:py-5 lg:px-8 lg:py-6'
             }`}
           >
             <WorkspaceHeader />
 
             <div
-              className={`${isCompanyRoute ? 'mt-0 flex flex-1 flex-col overflow-hidden pb-0' : 'mt-6 pb-6'}`}
+              className={`verdant-scrollbar min-h-0 flex-1 ${
+              isCompanyRoute
+                ? 'mt-0 flex flex-col overflow-hidden pb-0'
+                : isChatRoute
+                  ? 'mt-6 flex flex-col overflow-hidden pb-0'
+                  : 'mt-6 overflow-y-auto pb-6'
+            }`}
             >
               <div
-                className={`${isCompanyRoute ? '' : 'mx-auto'} flex w-full flex-col ${
-                  isCompanyRoute ? 'h-full gap-0' : 'gap-8 lg:gap-10'
+                className={`${isFullscreenRoute ? '' : 'mx-auto'} flex min-h-0 w-full flex-col ${
+                  isFullscreenRoute ? 'flex-1 gap-0' : 'gap-8 lg:gap-10'
                 } ${
                   isCompanyRoute ? 'max-w-none' : isImmersiveWorkspaceRoute ? 'max-w-[104rem]' : 'max-w-6xl'
                 }`}
@@ -78,7 +88,7 @@ export function WorkspaceShell({
               </div>
             </div>
           </div>
-        </div>
+        </section>
       </div>
     </main>
   );
