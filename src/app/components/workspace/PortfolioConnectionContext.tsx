@@ -16,11 +16,13 @@ type PortfolioConnectionContextValue = {
   isBrokerConnected: (broker: BrokerName) => boolean;
 };
 
+const demoConnectedBrokers: BrokerName[] = ['Robinhood', 'Fidelity'];
+
 const portfolioConnectionFallback: PortfolioConnectionContextValue = {
   connectedAssets: [],
-  connectedBrokers: [],
+  connectedBrokers: demoConnectedBrokers,
   connectBroker: () => {},
-  isBrokerConnected: () => false,
+  isBrokerConnected: (broker) => demoConnectedBrokers.includes(broker),
 };
 
 const PortfolioConnectionContext = createContext<PortfolioConnectionContextValue>(
@@ -32,7 +34,7 @@ export function PortfolioConnectionProvider({
 }: {
   children: React.ReactNode;
 }) {
-  const [connectedBrokers, setConnectedBrokers] = useState<BrokerName[]>([]);
+  const [connectedBrokers, setConnectedBrokers] = useState<BrokerName[]>(demoConnectedBrokers);
 
   useEffect(() => {
     if (typeof window === 'undefined') {
@@ -41,6 +43,10 @@ export function PortfolioConnectionProvider({
 
     const storedValue = window.localStorage.getItem(portfolioConnectionStorageKey);
     if (!storedValue) {
+      window.localStorage.setItem(
+        portfolioConnectionStorageKey,
+        JSON.stringify(demoConnectedBrokers),
+      );
       return;
     }
 

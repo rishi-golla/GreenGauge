@@ -50,6 +50,20 @@ export function AssetsPage() {
             {isBrokerConnected('Robinhood') ? 'Robinhood Connected' : 'Connect Robinhood'}
           </button>
 
+          <button
+            type="button"
+            onClick={() => connectBroker('Fidelity')}
+            className={cn(
+              'verdant-glass inline-flex items-center justify-center gap-2 rounded-full px-5 py-3 text-sm font-semibold transition',
+              isBrokerConnected('Fidelity')
+                ? 'border border-[rgba(0,245,212,0.22)] bg-[rgba(0,245,212,0.08)] text-[var(--verdant-mint)] shadow-[0_0_24px_rgba(0,245,212,0.12)] hover:border-[rgba(0,245,212,0.32)] hover:bg-[rgba(0,245,212,0.12)]'
+                : 'border border-white/10 bg-white/[0.03] text-white/78 hover:border-white/20 hover:bg-white/[0.05]',
+            )}
+          >
+            <Link2 className="h-4 w-4" />
+            {isBrokerConnected('Fidelity') ? 'Fidelity Connected' : 'Connect Fidelity'}
+          </button>
+
           <div className="rounded-full border border-white/10 bg-white/[0.03] px-4 py-3 text-[0.72rem] uppercase tracking-[0.2em] text-white/48">
             {connectedBrokers.length > 0 ? `${connectedBrokers.join(', ')} linked` : 'Demo holdings ready'}
           </div>
