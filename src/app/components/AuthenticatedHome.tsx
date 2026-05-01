@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 
 import { supabase } from '../../lib/supabase';
+import { PortfolioConnectionProvider } from './workspace/PortfolioConnectionContext';
 import { WorkspaceShell } from './workspace/WorkspaceShell';
 
 export function AuthenticatedHome() {
@@ -36,11 +37,13 @@ export function AuthenticatedHome() {
   };
 
   return (
-    <WorkspaceShell
-      isSigningOut={isSigningOut}
-      signOutError={signOutError}
-      onSignOut={handleSignOut}
-      userName={userName}
-    />
+    <PortfolioConnectionProvider>
+      <WorkspaceShell
+        isSigningOut={isSigningOut}
+        signOutError={signOutError}
+        onSignOut={handleSignOut}
+        userName={userName}
+      />
+    </PortfolioConnectionProvider>
   );
 }

@@ -16,7 +16,16 @@ type PortfolioConnectionContextValue = {
   isBrokerConnected: (broker: BrokerName) => boolean;
 };
 
-const PortfolioConnectionContext = createContext<PortfolioConnectionContextValue | null>(null);
+const portfolioConnectionFallback: PortfolioConnectionContextValue = {
+  connectedAssets: [],
+  connectedBrokers: [],
+  connectBroker: () => {},
+  isBrokerConnected: () => false,
+};
+
+const PortfolioConnectionContext = createContext<PortfolioConnectionContextValue>(
+  portfolioConnectionFallback,
+);
 
 export function PortfolioConnectionProvider({
   children,
@@ -81,11 +90,5 @@ export function PortfolioConnectionProvider({
 }
 
 export function usePortfolioConnection() {
-  const context = useContext(PortfolioConnectionContext);
-
-  if (!context) {
-    throw new Error('usePortfolioConnection must be used within PortfolioConnectionProvider.');
-  }
-
-  return context;
+  return useContext(PortfolioConnectionContext);
 }

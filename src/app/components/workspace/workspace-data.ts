@@ -55,9 +55,9 @@ export const workspacePageMeta: Record<
     description: '',
   },
   '/workspace/assets': {
-    eyebrow: 'Holdings Lens',
-    title: 'Assets',
-    description: 'Scan the names, sectors, and weights shaping your environmental exposure.',
+    eyebrow: '',
+    title: '',
+    description: '',
   },
   '/workspace/chat': {
     eyebrow: '',
@@ -148,6 +148,12 @@ export const attentionMoments = [
 export type AssetRecord = {
   id: string;
   name: string;
+  ticker: string;
+  broker: 'Robinhood' | 'Fidelity' | 'Manual';
+  connectionState: 'Connected' | 'Review';
+  quantity: string;
+  marketValue: string;
+  marketValueUsd: number;
   sector: string;
   region: string;
   weight: string;
@@ -160,68 +166,62 @@ export type AssetRecord = {
 
 export const assetRecords: AssetRecord[] = [
   {
-    id: 'north-sea-logistics',
-    name: 'North Sea Logistics',
-    sector: 'Transport',
-    region: 'Europe',
-    weight: '8.2%',
-    carbonIntensity: '148 tCO2e / $M',
-    status: 'Watch',
-    narrative: 'Supply-chain route changes are lifting Scope 3 exposure despite modest operational gains.',
-    exposure: '$12.6M',
-    icon: Globe2,
-  },
-  {
-    id: 'helios-thermal',
-    name: 'Helios Thermal Partners',
-    sector: 'Utilities',
+    id: 'nvda-robinhood',
+    name: 'NVIDIA',
+    ticker: 'NVDA',
+    broker: 'Robinhood',
+    connectionState: 'Connected',
+    quantity: '0.16 shares',
+    marketValue: '$145',
+    marketValueUsd: 145,
+    sector: 'Semiconductors',
     region: 'North America',
-    weight: '7.4%',
-    carbonIntensity: '132 tCO2e / $M',
-    status: 'Watch',
-    narrative: 'Highly sensitive to carbon-price escalation, especially under aggressive policy scenarios.',
-    exposure: '$10.8M',
-    icon: ShieldAlert,
-  },
-  {
-    id: 'aurora-grid-metals',
-    name: 'Aurora Grid Metals',
-    sector: 'Materials',
-    region: 'Nordics',
-    weight: '5.1%',
-    carbonIntensity: '64 tCO2e / $M',
-    status: 'Improving',
-    narrative: 'Electrification investments are steadily reducing intensity and improving resilience.',
-    exposure: '$7.1M',
-    icon: Leaf,
-  },
-  {
-    id: 'verdant-storage',
-    name: 'Verdant Storage Systems',
-    sector: 'Industrials',
-    region: 'APAC',
-    weight: '4.8%',
-    carbonIntensity: '58 tCO2e / $M',
+    weight: '48.3%',
+    carbonIntensity: '28 tCO2e / $M',
     status: 'Stable',
-    narrative: 'Lower direct emissions profile, but supplier concentration remains worth monitoring.',
-    exposure: '$6.3M',
+    narrative: 'High-conviction growth position sourced from Robinhood. AI upside remains strong, while supply-chain energy load still matters for climate scoring.',
+    exposure: '$145',
     icon: ChartColumnBig,
   },
   {
-    id: 'atlas-grid-services',
-    name: 'Atlas Grid Services',
-    sector: 'Infrastructure',
-    region: 'United Kingdom',
-    weight: '6.3%',
-    carbonIntensity: '77 tCO2e / $M',
+    id: 'msft-robinhood',
+    name: 'Microsoft',
+    ticker: 'MSFT',
+    broker: 'Fidelity',
+    connectionState: 'Connected',
+    quantity: '0.38 shares',
+    marketValue: '$162',
+    marketValueUsd: 162,
+    sector: 'Software',
+    region: 'North America',
+    weight: '51.7%',
+    carbonIntensity: '19 tCO2e / $M',
     status: 'Stable',
-    narrative: 'Resilience is strong under current policy assumptions with moderate transition upside.',
-    exposure: '$8.4M',
-    icon: BellRing,
+    narrative: 'Core software holding with lower direct climate drag than the energy sleeve and a stronger governance profile.',
+    exposure: '$162',
+    icon: LayoutGrid,
+  },
+  {
+    id: 'f-robinhood',
+    name: 'Ford',
+    ticker: 'F',
+    broker: 'Robinhood',
+    connectionState: 'Connected',
+    quantity: '8 shares',
+    marketValue: '$96',
+    marketValueUsd: 96,
+    sector: 'Automotive',
+    region: 'North America',
+    weight: '24.2%',
+    carbonIntensity: '88 tCO2e / $M',
+    status: 'Watch',
+    narrative: 'Smaller Robinhood position that is currently under pressure. EV transition progress helps, but margin compression and legacy manufacturing exposure keep the outlook softer.',
+    exposure: '$96',
+    icon: ShieldAlert,
   },
 ];
 
-export const assetFilters = ['All', 'Watch', 'Stable', 'Improving', 'Europe', 'Utilities'] as const;
+export const assetFilters = ['All', 'Robinhood', 'Fidelity'] as const;
 
 export const riskScenarios = [
   {
