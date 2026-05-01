@@ -1,7 +1,8 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { Camera, Eye, EyeOff, X } from 'lucide-react';
+import { Camera, Eye, EyeOff, Link2, X } from 'lucide-react';
 
 import { supabase } from '../../../../lib/supabase';
+import { usePortfolioConnection } from '../PortfolioConnectionContext';
 import { WorkspaceCard } from '../WorkspaceCard';
 
 // ── Exports consumed by WorkspaceSidebar ──────────────────────────────────────
@@ -202,6 +203,7 @@ function Toggle({ checked, onChange }: { checked: boolean; onChange: (v: boolean
 
 // ── Main component ────────────────────────────────────────────────────────────
 export function SettingsPage() {
+  const { connectBroker, connectedBrokers, isBrokerConnected } = usePortfolioConnection();
   const [settings, setSettings] = useState<Settings>(loadSettings);
   const [nameDraft, setNameDraft] = useState(settings.account.name);
   const [authEmail, setAuthEmail] = useState<string>('');
@@ -373,6 +375,53 @@ export function SettingsPage() {
       </section>
 
       {/* ── Notifications ── */}
+      <section>
+        <WorkspaceCard>
+          <p className="text-[0.74rem] uppercase tracking-[0.24em] text-white/44">
+            Broker Connections
+          </p>
+
+          <div className="mt-5 flex flex-wrap items-center gap-3">
+            <button
+              type="button"
+              onClick={() => connectBroker('Robinhood')}
+              className={`verdant-glass inline-flex items-center justify-center gap-2 rounded-full px-5 py-3 text-sm font-semibold transition ${
+                isBrokerConnected('Robinhood')
+                  ? 'border border-[rgba(0,245,212,0.22)] bg-[rgba(0,245,212,0.08)] text-[var(--verdant-mint)] shadow-[0_0_24px_rgba(0,245,212,0.12)] hover:border-[rgba(0,245,212,0.32)] hover:bg-[rgba(0,245,212,0.12)]'
+                  : 'border border-white/10 bg-white/[0.03] text-white/78 hover:border-white/20 hover:bg-white/[0.05]'
+              }`}
+            >
+              <Link2 className="h-4 w-4" />
+              {isBrokerConnected('Robinhood') ? 'Robinhood Connected' : 'Connect Robinhood'}
+            </button>
+
+            <button
+              type="button"
+              onClick={() => connectBroker('Fidelity')}
+              className={`verdant-glass inline-flex items-center justify-center gap-2 rounded-full px-5 py-3 text-sm font-semibold transition ${
+                isBrokerConnected('Fidelity')
+                  ? 'border border-[rgba(0,245,212,0.22)] bg-[rgba(0,245,212,0.08)] text-[var(--verdant-mint)] shadow-[0_0_24px_rgba(0,245,212,0.12)] hover:border-[rgba(0,245,212,0.32)] hover:bg-[rgba(0,245,212,0.12)]'
+                  : 'border border-white/10 bg-white/[0.03] text-white/78 hover:border-white/20 hover:bg-white/[0.05]'
+              }`}
+            >
+              <Link2 className="h-4 w-4" />
+              {isBrokerConnected('Fidelity') ? 'Fidelity Connected' : 'Connect Fidelity'}
+            </button>
+
+            <div className="rounded-full border border-white/10 bg-white/[0.03] px-4 py-3 text-[0.72rem] uppercase tracking-[0.2em] text-white/48">
+              {connectedBrokers.length > 0
+                ? `${connectedBrokers.join(', ')} linked`
+                : 'Demo brokers ready'}
+            </div>
+          </div>
+
+          <p className="mt-4 text-[0.78rem] leading-6 text-white/40">
+            Demo-only connection controls for the current prototype. Live brokerage
+            authentication can be wired into the same settings flow later.
+          </p>
+        </WorkspaceCard>
+      </section>
+
       <section>
         <WorkspaceCard>
           <p className="text-[0.74rem] uppercase tracking-[0.24em] text-white/44">Notifications</p>
